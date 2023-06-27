@@ -34,4 +34,8 @@ export class ItemComponent implements OnInit, OnChanges {
       .toogleComprado(this.item)
   }
 
+  generateNameClass(): string {
+    return this.item.comprado ? "description comprado" : "description"
+  }
+
 }
