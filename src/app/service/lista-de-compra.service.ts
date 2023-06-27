@@ -6,32 +6,46 @@ import { Injectable } from '@angular/core';
 })
 export class ListaDeCompraService {
 
-  private listaDeCompra: Item[] = [
-    {
-      "id": 1,
-      "nome": "Queijo prato",
-      "data": "Segunda-feira (31/10/2022) às 08:30",
-      "comprado": false
-    },
-    {
-      "id": 2,
-      "nome": "Leite integral",
-      "data": "Segunda-feira (31/10/2022) às 08:30",
-      "comprado": false
-    },
-    {
-      "id": 3,
-      "nome": "Mamão papaia",
-      "data": "Segunda-feira (31/10/2022) às 08:30",
-      "comprado": true
-    },
-  ]
+  private listaDeCompra: Item[] = []
 
   constructor() {
-    console.log('Instanciando dependências necessárias para o serviço.');
+    this.listaDeCompra = JSON.parse(localStorage.getItem('itens') || '[]')
   }
 
   getListaDeCompra(){
     return this.listaDeCompra;
+  }
+
+  criarItem(nomeDoItem: string) : Item {
+    const id = this.listaDeCompra.length + 1
+    const item : Item = {
+      id,
+      nome: nomeDoItem,
+      data: new Date().toLocaleDateString('pt-Br'),
+      comprado: false
+    }
+    return item
+  }
+
+  adicionarItemNaLista(nomeDoItem: string) {
+    const item = this.criarItem(nomeDoItem)
+    this.listaDeCompra.push(item)
+    // this.atualizarLocalStorage()
+  }
+
+  editarItemNaLista (item: Item, nomeEditadoDoItem: string) {
+    const itemEditado : Item = {
+      id: item.id,
+      comprado: item.comprado,
+      data: item.data,
+      nome: nomeEditadoDoItem
+    }
+    const id = Number(item.id)
+    this.listaDeCompra.splice(id-1, 1, itemEditado)
+    // this.atualizarLocalStorage()
+  }
+
+  atualizarLocalStorage() {
+    localStorage.setItem('itens', JSON.stringify(this.listaDeCompra))
   }
 }
