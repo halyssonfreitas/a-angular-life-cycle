@@ -20,7 +20,6 @@ export class ItemComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(): void {
-    console.log(1)
   }
 
   ngOnInit(): void {}
