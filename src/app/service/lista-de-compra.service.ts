@@ -45,6 +45,19 @@ export class ListaDeCompraService {
     // this.atualizarLocalStorage()
   }
 
+  toogleComprado (item: Item) {
+    const itemEditado : Item = {
+      id: item.id,
+      comprado: !item.comprado,
+      data: item.data,
+      nome: item.nome
+    }
+    const id = Number(item.id)
+    this.listaDeCompra.splice(id-1, 1, itemEditado)
+
+    this.atualizarLocalStorage()
+  }
+
   atualizarLocalStorage() {
     localStorage.setItem('itens', JSON.stringify(this.listaDeCompra))
   }
